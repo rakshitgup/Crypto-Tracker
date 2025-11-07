@@ -1,0 +1,28 @@
+<%- include('partials/header') %>
+
+    <h2>Search Result</h2>
+
+    <% if (error) { %>
+        <p class="error">
+            <%= error %>
+        </p>
+        <% } else if (coin) { %>
+            <div class="coin-card">
+                <img src="<%= coin.image.large %>" alt="<%= coin.name %>" />
+                <h3>
+                    <%= coin.name %> (<%= coin.symbol.toUpperCase() %>)
+                </h3>
+                <p><strong>Current Price:</strong> $<%= coin.market_data.current_price.usd.toLocaleString() %>
+                </p>
+                <p><strong>Market Cap:</strong> $<%= coin.market_data.market_cap.usd.toLocaleString() %>
+                </p>
+                <p><strong>24h Change:</strong>
+                    <span class="<%= coin.market_data.price_change_percentage_24h >= 0 ? 'up' : 'down' %>">
+                        <%= coin.market_data.price_change_percentage_24h.toFixed(2) %>%
+                    </span>
+                </p>
+                <p><a href="/coin/<%= coin.id %>">View more details</a></p>
+            </div>
+            <% } %>
+
+                <%- include('partials/footer') %>

@@ -1,0 +1,45 @@
+<%- include('partials/header') %>
+
+    <h2>Top 10 Cryptocurrencies by Market Cap</h2>
+
+    <% if (error) { %>
+        <p class="error">
+            <%= error %>
+        </p>
+        <% } else { %>
+            <table class="crypto-table">
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Coin</th>
+                        <th>Price (USD)</th>
+                        <th>24h Change</th>
+                        <th>Market Cap</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% coins.forEach((coin, index)=> { %>
+                        <tr>
+                            <td>
+                                <%= index + 1 %>
+                            </td>
+                            <td>
+                                <img src="<%= coin.image %>" alt="<%= coin.name %>" class="coin-img" />
+                                <a href="/coin/<%= coin.id %>">
+                                    <%= coin.name %> (<%= coin.symbol.toUpperCase() %>)
+                                </a>
+                            </td>
+                            <td>$<%= coin.current_price.toLocaleString() %>
+                            </td>
+                            <td class="<%= coin.price_change_percentage_24h >= 0 ? 'up' : 'down' %>">
+                                <%= coin.price_change_percentage_24h.toFixed(2) %>%
+                            </td>
+                            <td>$<%= coin.market_cap.toLocaleString() %>
+                            </td>
+                        </tr>
+                        <% }) %>
+                </tbody>
+            </table>
+            <% } %>
+
+                <%- include('partials/footer') %>

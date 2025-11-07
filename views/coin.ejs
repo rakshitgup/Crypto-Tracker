@@ -1,0 +1,39 @@
+<%- include('partials/header') %>
+
+    <h2>Coin Details</h2>
+
+    <% if (error) { %>
+        <p class="error">
+            <%= error %>
+        </p>
+        <% } else if (coin) { %>
+            <div class="coin-detail">
+                <img src="<%= coin.image.large %>" alt="<%= coin.name %>" class="detail-img" />
+                <h3>
+                    <%= coin.name %> (<%= coin.symbol.toUpperCase() %>)
+                </h3>
+                <p><strong>Current Price:</strong> $<%= coin.market_data.current_price.usd.toLocaleString() %>
+                </p>
+                <p><strong>Market Cap:</strong> $<%= coin.market_data.market_cap.usd.toLocaleString() %>
+                </p>
+                <p><strong>24h Change:</strong>
+                    <span class="<%= coin.market_data.price_change_percentage_24h >= 0 ? 'up' : 'down' %>">
+                        <%= coin.market_data.price_change_percentage_24h.toFixed(2) %>%
+                    </span>
+                </p>
+                <p><strong>Homepage:</strong>
+                    <% if (coin.links.homepage[0]) { %>
+                        <a href="<%= coin.links.homepage[0] %>" target="_blank">
+                            <%= coin.links.homepage[0] %>
+                        </a>
+                        <% } else { %> N/A <% } %>
+                </p>
+                <p><strong>Description:</strong>
+                    <%= coin.description.en ? coin.description.en.split(".")[0] + "." : "No description available." %>
+                </p>
+            </div>
+            <% } else { %>
+                <p>No data found.</p>
+                <% } %>
+
+                    <%- include('partials/footer') %>
